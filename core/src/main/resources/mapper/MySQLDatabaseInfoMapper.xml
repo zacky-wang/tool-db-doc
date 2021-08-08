@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jaswine.tool.mapper.MySQLDatabaseInfoMapper">
+
+    <resultMap id="mysqlDbObj" type="com.jaswine.tool.model.mysql.MySQLTableLineModel">
+        <id property="field" column="Field"/>
+        <result property="type" column="Type"/>
+        <result property="collation" column="Collation"/>
+        <result property="isNull" column="Null"/>
+        <result property="key" column="Key"/>
+        <result property="defaultValue" column="Default"/>
+        <result property="comment" column="Comment"/>
+    </resultMap>
+
+    <select id="getAllTableName" resultType="java.lang.String">
+        show tables
+    </select>
+
+    <select id="getMySQLTableInfo" resultMap="mysqlDbObj">
+        SHOW FULL COLUMNS FROM ${tableName}
+    </select>
+
+</mapper>

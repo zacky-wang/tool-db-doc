@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="10 seconds" debug="false">
+
+	<property name="APP_NAME" value="core" />
+	<property name="LOG_HOME" value="./log/" />
+
+	<!-- CONSOLE -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId}] %-5level %logger{50} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- BIZ LOG -->
+	<appender name="DEBUG-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${APP_NAME}/${APP_NAME}-debug.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d{yyyy/MM/dd-HH:mm:ss.SSS} [%thread] [%X{traceId}] %-3level %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>DEBUG</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>ACCEPT</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_HOME}/${APP_NAME}/${APP_NAME}-debug-%d{yyyyMMdd}-%i.log</FileNamePattern>
+			<MaxHistory>15</MaxHistory>
+			<maxFileSize>100Mb</maxFileSize>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="INFO-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${APP_NAME}/${APP_NAME}-info.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d{yyyy/MM/dd-HH:mm:ss.SSS} [%thread] [%X{traceId}] %-3level %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_HOME}/${APP_NAME}/${APP_NAME}-info-%d{yyyyMMdd}-%i.log</FileNamePattern>
+			<MaxHistory>15</MaxHistory>
+			<maxFileSize>100Mb</maxFileSize>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="ERROR-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${APP_NAME}/${APP_NAME}-error.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d{yyyy/MM/dd-HH:mm:ss.SSS} [%thread] [%X{traceId}] %-3level %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_HOME}/${APP_NAME}/${APP_NAME}-error-%d{yyyyMMdd}-%i.log</FileNamePattern>
+			<MaxHistory>15</MaxHistory>
+			<maxFileSize>100Mb</maxFileSize>
+		</rollingPolicy>
+	</appender>
+
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="INFO-OUT" />
+		<appender-ref ref="ERROR-OUT" />
+	</root>
+
+
+</configuration>
